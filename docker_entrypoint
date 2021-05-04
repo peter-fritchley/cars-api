@@ -2,4 +2,8 @@
 
 composer install
 
+php -r "file_exists('.env') || copy('.env.example', '.env');"
+
+php artisan key:generate --ansi
+
 php -S 0.0.0.0:8080 server.php
