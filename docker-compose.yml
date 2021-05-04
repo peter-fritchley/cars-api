@@ -1,0 +1,28 @@
+version: "3"
+
+services:
+
+  cars-api:
+    container_name: cars-api
+    build:
+        context: .
+        dockerfile: Dockerfile
+    restart: "always"
+    volumes:
+      - ".:/var/www/html:delegated"
+    ports:
+      - "8080:8080"
+    command: "docker_entrypoint"
+    depends_on:
+      - database
+
+  database:
+    image: mysql
+    ports:
+      - "9306:3306"
+    volumes:
+      - "./docker/mysql/data:/var/lib/mysql:delegated"
+    environment:
+      - MYSQL_ROOT_HOST=%
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=cars_api
